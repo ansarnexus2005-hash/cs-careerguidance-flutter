@@ -21,41 +21,42 @@ class Register extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 10),
             TextFormField(
               decoration: InputDecoration(
                 hintText: "DOB",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 10),
             TextFormField(
               decoration: InputDecoration.collapsed(
                 hintText: "Email",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 10),
             TextFormField(
               decoration: InputDecoration.collapsed(
                 hintText: "Qualification",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 10),
             TextFormField(
               decoration: InputDecoration.collapsed(
                 hintText: "Area Of Interest",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 10),
             TextFormField(
               decoration: InputDecoration.collapsed(
                 hintText: "Phone No",
                 border: OutlineInputBorder(),
               ),
             ),
+             ElevatedButton(onPressed: (){}, child: Text("submit"))
           ],
         ),
       ),

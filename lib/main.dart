@@ -1,5 +1,8 @@
 import 'package:carriera/login.dart';
 import 'package:carriera/register.dart';
+import 'package:carriera/uploadmarklist.dart';
+import 'package:carriera/uploadresume.dart';
+import 'package:carriera/viewcolleges.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Register()
+      home:CollegeFilterPage()
     );
   }
 }
