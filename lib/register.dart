@@ -5,58 +5,97 @@ class Register extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Controllers to capture input values
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController dobController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController qualificationController = TextEditingController();
+    final TextEditingController interestController = TextEditingController();
+    final TextEditingController phoneController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
-        title: Text("Register"),
+        title: const Text("Register"),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      body: SingleChildScrollView(  // prevents overflow when keyboard opens
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextFormField(
-              decoration: InputDecoration(
-                hintText: "Name",
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: "Name",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 16),
             TextFormField(
-              decoration: InputDecoration(
-                hintText: "DOB",
+              controller: dobController,
+              decoration: const InputDecoration(
+                labelText: "Date of Birth",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 16),
             TextFormField(
-              decoration: InputDecoration.collapsed(
-                hintText: "Email",
+              controller: emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                labelText: "Email",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 16),
             TextFormField(
-              decoration: InputDecoration.collapsed(
-                hintText: "Qualification",
+              controller: qualificationController,
+              decoration: const InputDecoration(
+                labelText: "Qualification",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 16),
             TextFormField(
-              decoration: InputDecoration.collapsed(
-                hintText: "Area Of Interest",
+              controller: interestController,
+              decoration: const InputDecoration(
+                labelText: "Area of Interest",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 16),
             TextFormField(
-              decoration: InputDecoration.collapsed(
-                hintText: "Phone No",
+              controller: phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                labelText: "Phone Number",
                 border: OutlineInputBorder(),
               ),
             ),
-             ElevatedButton(onPressed: (){}, child: Text("submit"))
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Simple validation example
+                  if (nameController.text.isEmpty ||
+                      dobController.text.isEmpty ||
+                      emailController.text.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please fill in all required fields')),
+                    );
+                    return;
+                  }
+                  // Show submission feedback
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Registration submitted for ${nameController.text}'),
+                    ),
+                  );
+                },
+                child: const Text("Submit"),
+              ),
+            ),
           ],
         ),
       ),

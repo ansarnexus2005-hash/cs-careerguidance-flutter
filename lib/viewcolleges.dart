@@ -8,6 +8,8 @@ class College {
 }
 
 class CollegeFilterPage extends StatefulWidget {
+  const CollegeFilterPage({super.key});
+
   @override
   _CollegeFilterPageState createState() => _CollegeFilterPageState();
 }
@@ -27,28 +29,42 @@ class _CollegeFilterPageState extends State<CollegeFilterPage> {
     for (var college in colleges) {
       courseSet.addAll(college.courses);
     }
-    return courseSet.toList();
+    final coursesList = courseSet.toList();
+    coursesList.sort();
+    return coursesList;
   }
 
   List<College> get filteredColleges {
-    if (selectedCourse == null) return colleges;
+    if (selectedCourse == null || selectedCourse!.isEmpty) return colleges;
     return colleges
         .where((college) => college.courses.contains(selectedCourse))
         .toList();
+  }
+
+  void clearFilter() {
+    setState(() {
+      selectedCourse = null;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Filter Colleges by Course"),
+        title: const Text("Filter Colleges by Course"),
+        backgroundColor: Colors.blueGrey,
+        centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: DropdownButtonFormField<String>(
-              hint: Text("Select a course"),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            DropdownButtonFormField<String>(
+              decoration: const InputDecoration(
+                labelText: "Select a course",
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.school),
+              ),
               value: selectedCourse,
               items: allCourses
                   .map((course) => DropdownMenuItem(
@@ -62,20 +78,42 @@ class _CollegeFilterPageState extends State<CollegeFilterPage> {
                 });
               },
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredColleges.length,
-              itemBuilder: (context, index) {
-                final college = filteredColleges[index];
-                return ListTile(
-                  title: Text(college.name),
-                  subtitle: Text(college.courses.join(", ")),
-                );
-              },
+            const SizedBox(height: 12),
+            if (selectedCourse != null)
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton.icon(
+                  onPressed: clearFilter,
+                  icon: const Icon(Icons.clear),
+                  label: const Text("Clear Filter"),
+                ),
+              ),
+            const SizedBox(height: 12),
+            Expanded(
+              child: filteredColleges.isEmpty
+                  ? const Center(
+                      child: Text(
+                        "No colleges found for the selected course.",
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: filteredColleges.length,
+                      itemBuilder: (context, index) {
+                        final college = filteredColleges[index];
+                        return Card(
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          child: ListTile(
+                            title: Text(college.name),
+                            subtitle: Text(college.courses.join(", ")),
+                            leading: const Icon(Icons.school, color: Colors.blueGrey),
+                          ),
+                        );
+                      },
+                    ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
