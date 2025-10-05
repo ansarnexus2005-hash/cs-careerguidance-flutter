@@ -1,3 +1,4 @@
+import 'package:carriera/register.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -73,7 +74,11 @@ class LoginScreen extends StatelessWidget {
                 const Text("Don't have an account? "),
                 GestureDetector(
                   onTap: () {
-                    // TODO: Navigate to Register Page
+                    Navigator.push(
+                      context,
+                       MaterialPageRoute(builder:(context)=> Register()
+                       ));
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Navigate to Sign Up")),
                     );

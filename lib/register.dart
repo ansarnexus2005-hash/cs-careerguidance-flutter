@@ -1,3 +1,4 @@
+import 'package:carriera/api/registerapi.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatelessWidget {
@@ -12,6 +13,7 @@ class Register extends StatelessWidget {
     final TextEditingController qualificationController = TextEditingController();
     final TextEditingController interestController = TextEditingController();
     final TextEditingController phoneController = TextEditingController();
+    final TextEditingController passwordController=TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +26,7 @@ class Register extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
-              controller: nameController,
+              controller:nameController,
               decoration: const InputDecoration(
                 labelText: "Name",
                 border: OutlineInputBorder(),
@@ -68,10 +70,21 @@ class Register extends StatelessWidget {
               controller: phoneController,
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
-                labelText: "Phone Number",
+                labelText: "PhoneNo",
                 border: OutlineInputBorder(),
               ),
             ),
+            const SizedBox(height: 16),
+             TextFormField(
+              controller: passwordController,
+              keyboardType: TextInputType.phone,
+              decoration: const InputDecoration(
+                labelText: "Password",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          
+
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
@@ -87,6 +100,21 @@ class Register extends StatelessWidget {
                     return;
                   }
                   // Show submission feedback
+                  Map<String,dynamic>data ={
+                  'Name':nameController.text,
+                  'DOB':dobController.text,
+                  'Email':emailController.text,
+                  'Qualification':qualificationController.text,
+                  'Area_Of_Interest':interestController.text,
+                  'PhoneNo':phoneController.text,
+                  'Password':passwordController.text,
+                  'Username':emailController.text,
+
+                  };
+
+                  registerApi(data, context);
+
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Registration submitted for ${nameController.text}'),
